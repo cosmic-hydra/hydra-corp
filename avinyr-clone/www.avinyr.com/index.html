@@ -2021,4 +2021,53 @@ html.wf-design-mode .styleguide_guide_wrap {
       removePersist();
     });
   })
-</script></body></html>
+</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+.hydra-ticker{position:fixed;bottom:0;left:0;right:0;z-index:9999;background:rgba(22,22,22,0.95);backdrop-filter:blur(10px);border-top:1px solid rgba(0,255,136,0.2);padding:8px 20px;display:flex;align-items:center;gap:24px;font-family:'SF Mono',Monaco,Consolas,monospace;font-size:12px;color:#fff;transform:translateY(100%);animation:slideUp 0.8s ease 2s forwards}
+@keyframes slideUp{to{transform:translateY(0)}}
+.hydra-ticker .ticker-item{display:flex;align-items:center;gap:6px;white-space:nowrap}
+.hydra-ticker .ticker-label{color:rgba(255,255,255,0.5);text-transform:uppercase;font-size:10px;letter-spacing:0.5px}
+.hydra-ticker .ticker-value{color:#00ff88;font-weight:600}
+.hydra-ticker .ticker-value.negative{color:#ff4444}
+.hydra-ticker .ticker-chart{width:80px;height:30px}
+.hydra-ticker .ticker-divider{width:1px;height:20px;background:rgba(255,255,255,0.1)}
+.hydra-ticker .ticker-cta{margin-left:auto;padding:4px 12px;border:1px solid rgba(0,255,136,0.4);border-radius:3px;color:#00ff88;text-decoration:none;font-size:10px;text-transform:uppercase;letter-spacing:1px;transition:all 0.3s}
+.hydra-ticker .ticker-cta:hover{background:#00ff88;color:#161616}
+@media(max-width:768px){.hydra-ticker{gap:12px;padding:6px 12px;overflow-x:auto}.hydra-ticker .ticker-chart{display:none}}
+</style>
+<div class="hydra-ticker">
+  <div class="ticker-item"><span class="ticker-label">AUM</span><span class="ticker-value" id="tk-aum">$2.41B</span></div>
+  <div class="ticker-divider"></div>
+  <div class="ticker-item"><span class="ticker-label">24h P&L</span><span class="ticker-value" id="tk-pnl">+$4.2M</span></div>
+  <div class="ticker-divider"></div>
+  <div class="ticker-item"><span class="ticker-label">Sharpe</span><span class="ticker-value">2.81</span></div>
+  <div class="ticker-divider"></div>
+  <div class="ticker-item"><span class="ticker-label">Orders/s</span><span class="ticker-value" id="tk-orders">12,847</span></div>
+  <div class="ticker-divider"></div>
+  <div class="ticker-item"><canvas id="tk-mini-chart" class="ticker-chart"></canvas></div>
+  <div class="ticker-divider"></div>
+  <div class="ticker-item"><span class="ticker-label">Win Rate</span><span class="ticker-value">68.3%</span></div>
+  <a href="performance.html" class="ticker-cta">View Performance →</a>
+</div>
+<script>
+(function(){
+  // Mini sparkline chart
+  var c=document.getElementById('tk-mini-chart');
+  if(c&&typeof Chart!=='undefined'){
+    var ctx=c.getContext('2d');
+    var data=[1.2,1.8,1.4,2.1,1.9,2.4,2.2,2.8,2.6,3.1,2.9,3.4,3.2,3.6,3.5,3.9,3.7,4.1,4.0,4.3];
+    new Chart(ctx,{type:'line',data:{labels:data.map(function(_,i){return i}),datasets:[{data:data,borderColor:'#00ff88',borderWidth:1.5,pointRadius:0,fill:true,backgroundColor:'rgba(0,255,136,0.1)',tension:0.4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{display:false},y:{display:false}},animation:{duration:1500}}});
+  }
+  // Simulate live updates
+  function randomize(base,range){return(base+Math.random()*range-range/2).toFixed(1)}
+  setInterval(function(){
+    var pnl=document.getElementById('tk-pnl');
+    var orders=document.getElementById('tk-orders');
+    if(pnl){var v=parseFloat(randomize(4.2,0.8));pnl.textContent=(v>=0?'+$':'-$')+Math.abs(v).toFixed(1)+'M';pnl.className='ticker-value'+(v<0?' negative':'')}
+    if(orders){orders.textContent=(12000+Math.floor(Math.random()*2000)).toLocaleString()}
+  },3000);
+})();
+</script>
+
+</body></html>
