@@ -124,11 +124,16 @@
       font-size: 0.95rem;
     }
 
-    .nav-links a:hover,
-    .nav-links a.is-active {
+    .nav-links a:hover {
       color: var(--text);
       background: rgba(255, 255, 255, 0.05);
       border-color: var(--border);
+    }
+
+    .nav-links a.is-active {
+      color: var(--accent);
+      background: rgba(0, 255, 136, 0.07);
+      border-color: rgba(0, 255, 136, 0.2);
     }
 
     main {
@@ -594,17 +599,25 @@
     }
   </style>
 </head>
-<body>
+<body><div class="hf-preseed-bar" style="background:linear-gradient(90deg,rgba(255,179,0,0.08),rgba(255,82,82,0.06));border-bottom:1px solid rgba(255,179,0,0.15);padding:10px 0;font-family:-apple-system,BlinkMacSystemFont,'Inter',sans-serif;">
+  <div style="max-width:1240px;margin:0 auto;padding:0 clamp(1rem,5vw,4rem);display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;text-align:center;">
+    <span style="width:7px;height:7px;border-radius:50%;background:#ffb300;box-shadow:0 0 8px rgba(255,179,0,0.5);display:inline-block;flex-shrink:0;"></span>
+    <span style="font-size:0.78rem;color:rgba(255,255,255,0.6);">hydra fund is in <strong style="color:rgba(255,179,0,0.9);">pre-seed stage</strong> — not yet incorporated or regulated. Currently seeking $500K USD for 15% equity to build and launch.</span>
+    <a href="legal.html" style="font-size:0.76rem;font-weight:600;color:rgba(255,179,0,0.8);text-decoration:none;border:1px solid rgba(255,179,0,0.2);padding:3px 10px;border-radius:999px;" onmouseover="this.style.background='rgba(255,179,0,0.08)'" onmouseout="this.style.background='transparent'">Learn more</a>
+  </div>
+</div>
+
   <nav class="site-nav">
     <div class="site-nav__inner">
       <a class="brand" href="index.html">hydra <span>fund</span></a>
       <div class="nav-links">
         <a href="index.html">Home</a>
         <a href="service.html">Services</a>
-        <a href="industries.html">Industries</a>
+        <a href="divisions.html">Divisions</a>
         <a href="about.html">About</a>
         <a href="performance.html" class="is-active">Performance</a>
         <a href="invest.html">Invest</a>
+        <a href="legal.html">Legal</a>
       </div>
     </div>
   </nav>
@@ -614,12 +627,15 @@
       <div class="container">
         <div class="hero-card">
           <div class="hero-copy">
-            <div class="eyebrow">AI-Autonomous Capital Engine</div>
+            <div class="eyebrow">AI-Autonomous Capital Engine · Pre-Seed Stage</div>
             <h1>Fund Performance</h1>
             <p>
               hydra fund is a fully AI-autonomous collectivised fund combining beta exposure, hedge fund execution,
               venture deployment, accelerator incubation, and investment-bank-style capital formation into a single
               adaptive operating system for compounding across public and private markets.
+            </p>
+            <p style="font-size:0.88rem;color:rgba(255,255,255,0.45);margin-top:10px;line-height:1.6;">
+              <strong style="color:rgba(255,179,0,0.7);">Note:</strong> hydra fund is not yet operational. All metrics below are modelled projections and back-tested simulations, not live results. The fund is currently in pre-seed stage seeking incorporation capital. <a href="legal.html" style="color:rgba(0,255,136,0.6);text-decoration:none;font-weight:600;">Full disclosures →</a>
             </p>
           </div>
           <div class="hero-badges">
@@ -642,6 +658,12 @@
 
     <section>
       <div class="container">
+        <div style="padding:14px 20px;border-radius:14px;background:rgba(255,179,0,0.06);border:1px solid rgba(255,179,0,0.18);display:flex;gap:12px;align-items:flex-start;margin-bottom:24px;">
+          <span style="color:#ffb300;font-size:1rem;flex-shrink:0;margin-top:1px;">⚠</span>
+          <p style="font-size:0.82rem;color:rgba(255,255,255,0.55);line-height:1.6;margin:0;">
+            <strong style="color:rgba(255,255,255,0.75);">Illustrative data only.</strong> All metrics, returns, AUM figures, and performance statistics on this page are <em>modelled projections or back-tested simulations</em> — not actual fund results. hydra fund is not yet operational and has no live trading history. <a href="legal.html" style="color:#ffb300;font-weight:600;text-decoration:none;">Full disclosures →</a>
+          </p>
+        </div>
         <div class="metrics-strip" id="metrics-strip">
           <article class="metric-card">
             <div class="metric-label">AUM</div>
@@ -839,10 +861,11 @@
         <div class="footer-links">
           <a href="index.html">Home</a>
           <a href="service.html">Services</a>
-          <a href="industries.html">Industries</a>
+          <a href="divisions.html">Divisions</a>
           <a href="about.html">About</a>
           <a href="performance.html">Performance</a>
           <a href="invest.html">Invest</a>
+          <a href="legal.html">Legal</a>
         </div>
         <div class="footer-contact mono"><a href="mailto:advaith@hydracorp.dev">advaith@hydracorp.dev</a></div>
       </div>
@@ -1261,5 +1284,14 @@
       Object.entries(liveMetrics).forEach(([name, config]) => updateLiveMetric(name, config));
     }, 1600);
   </script>
+
+<div class="hf-legal-strip" style="background:rgba(255,255,255,0.025);border-top:1px solid rgba(255,255,255,0.07);padding:16px 0;font-family:-apple-system,BlinkMacSystemFont,'Inter',sans-serif;">
+  <div style="max-width:1240px;margin:0 auto;padding:0 clamp(1rem,5vw,4rem);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;">
+    <p style="font-size:0.76rem;color:rgba(255,255,255,0.38);line-height:1.55;max-width:72ch;margin:0;">
+      <strong style="color:rgba(255,255,255,0.52);">Disclosure:</strong> hydra fund is <em>not</em> an incorporated entity and is <em>not</em> registered with SEBI or any regulatory authority. No securities are being offered. Investment tiers shown are forward-looking illustrations only. Operations are contingent on securing pre-seed investment.
+    </p>
+    <a href="legal.html" style="font-size:0.78rem;font-weight:600;color:rgba(0,255,136,0.75);text-decoration:none;white-space:nowrap;flex-shrink:0;" onmouseover="this.style.color='#00ff88'" onmouseout="this.style.color='rgba(0,255,136,0.75)'">View full legal disclosures →</a>
+  </div>
+</div>
 </body>
 </html>
