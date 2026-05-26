@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Capital Divisions — hydra fund</title>
+  <meta name="description" content="hydra fund operates five AI-native capital engines: hedge fund, beta fund, investment bank, startup accelerator, and VC fund — all unified under one AI decision layer."/>
+  <meta property="og:title" content="Capital Divisions — hydra fund"/>
+  <meta property="og:description" content="Five AI-native capital engines. One unified brain."/>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <style>
+    :root {
+      --bg: #0e0e0e;
+      --bg-2: #161616;
+      --bg-3: #1c1c1c;
+      --accent: #00ff88;
+      --blue: #0088ff;
+      --purple: #7c4dff;
+      --amber: #ffb300;
+      --pink: #ff4081;
+      --text: rgba(255,255,255,0.9);
+      --text-2: rgba(255,255,255,0.6);
+      --text-3: rgba(255,255,255,0.35);
+      --border: rgba(255,255,255,0.08);
+      --gutter: clamp(1.2rem,5vw,4rem);
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --radius-sm: 10px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+
+    /* ── Nav ── */
+    .site-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      backdrop-filter: blur(24px) saturate(1.4);
+      background: rgba(14,14,14,0.85);
+      border-bottom: 1px solid var(--border);
+    }
+    .site-nav__inner {
+      max-width: 1280px; margin: 0 auto;
+      padding: 0 var(--gutter);
+      height: 64px;
+      display: flex; align-items: center; justify-content: space-between; gap: 24px;
+    }
+    .brand {
+      font-size: 1.15rem; font-weight: 800; letter-spacing: -0.02em;
+      color: var(--text); text-decoration: none;
+    }
+    .brand span { color: var(--accent); }
+    .nav-links { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+    .nav-links a {
+      font-size: 0.82rem; font-weight: 500; color: var(--text-2);
+      text-decoration: none; padding: 6px 12px; border-radius: 8px;
+      border: 1px solid transparent; transition: all 0.18s;
+    }
+    .nav-links a:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+    .nav-links a.is-active {
+      color: var(--accent); background: rgba(0,255,136,0.07);
+      border-color: rgba(0,255,136,0.2);
+    }
+    .nav-links a.nav-invest {
+      color: var(--accent); background: rgba(0,255,136,0.1);
+      border-color: rgba(0,255,136,0.25);
+    }
+    .nav-links a.nav-invest:hover { background: rgba(0,255,136,0.18); }
+
+    /* ── Preseed bar ── */
+    .preseed-bar {
+      margin-top: 64px;
+      background: linear-gradient(90deg,rgba(255,179,0,0.08),rgba(255,82,82,0.06));
+      border-bottom: 1px solid rgba(255,179,0,0.15);
+      padding: 10px var(--gutter);
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      flex-wrap: wrap; text-align: center;
+    }
+    .preseed-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--amber); box-shadow: 0 0 8px rgba(255,179,0,0.5);
+      flex-shrink: 0;
+    }
+    .preseed-bar span { font-size: 0.78rem; color: var(--text-2); }
+    .preseed-bar a {
+      font-size: 0.76rem; font-weight: 600; color: rgba(255,179,0,0.8);
+      text-decoration: none; border: 1px solid rgba(255,179,0,0.2);
+      padding: 3px 10px; border-radius: 999px; transition: all 0.2s;
+    }
+    .preseed-bar a:hover { background: rgba(255,179,0,0.08); }
+
+    /* ── Layout helpers ── */
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 var(--gutter); }
+    section { padding: 96px 0; }
+    section.tight { padding: 64px 0; }
+
+    /* ── Hero ── */
+    .hero {
+      position: relative; min-height: 90vh;
+      display: flex; align-items: center;
+      overflow: hidden; padding: 80px 0 60px;
+    }
+    #hero-canvas {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: 0;
+    }
+    .hero__inner {
+      position: relative; z-index: 1;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 64px;
+      align-items: center;
+    }
+    @media (max-width: 900px) { .hero__inner { grid-template-columns: 1fr; gap: 40px; } }
+
+    .hero__eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 14px; border-radius: 999px;
+      background: rgba(0,255,136,0.08); border: 1px solid rgba(0,255,136,0.2);
+      font-size: 0.76rem; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 24px;
+    }
+    .hero__eyebrow-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent); box-shadow: 0 0 8px var(--accent);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.7); }
+    }
+    .hero__title {
+      font-size: clamp(2.8rem, 5.5vw, 5rem);
+      font-weight: 900; letter-spacing: -0.04em; line-height: 1.03;
+      margin-bottom: 24px;
+    }
+    .hero__title .grad {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--blue) 50%, var(--purple) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero__sub {
+      font-size: 1.1rem; color: var(--text-2); line-height: 1.7;
+      max-width: 520px; margin-bottom: 36px;
+    }
+    .hero__pills { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 40px; }
+    .hero__pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 14px; border-radius: 999px;
+      font-size: 0.78rem; font-weight: 600; border: 1px solid;
+      transition: all 0.2s;
+    }
+    .hero__pill:hover { transform: translateY(-2px); }
+    .hero__pill-dot { width: 5px; height: 5px; border-radius: 50%; }
+    .pill--hedge { color: var(--accent); border-color: rgba(0,255,136,0.3); background: rgba(0,255,136,0.07); }
+    .pill--hedge .hero__pill-dot { background: var(--accent); }
+    .pill--beta { color: var(--blue); border-color: rgba(0,136,255,0.3); background: rgba(0,136,255,0.07); }
+    .pill--beta .hero__pill-dot { background: var(--blue); }
+    .pill--ib { color: var(--purple); border-color: rgba(124,77,255,0.3); background: rgba(124,77,255,0.07); }
+    .pill--ib .hero__pill-dot { background: var(--purple); }
+    .pill--acc { color: var(--amber); border-color: rgba(255,179,0,0.3); background: rgba(255,179,0,0.07); }
+    .pill--acc .hero__pill-dot { background: var(--amber); }
+    .pill--vc { color: var(--pink); border-color: rgba(255,64,129,0.3); background: rgba(255,64,129,0.07); }
+    .pill--vc .hero__pill-dot { background: var(--pink); }
+
+    .hero__cta { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 28px; border-radius: 12px; font-size: 0.9rem;
+      font-weight: 700; text-decoration: none; border: none;
+      cursor: pointer; transition: all 0.2s; font-family: inherit;
+    }
+    .btn--primary {
+      background: linear-gradient(135deg, var(--accent), #00cc6e);
+      color: #0e0e0e;
+    }
+    .btn--primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(0,255,136,0.3); }
+    .btn--ghost {
+      background: rgba(255,255,255,0.05); color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn--ghost:hover { background: rgba(255,255,255,0.09); }
+
+    /* Hero right: animated division wheel */
+    .hero__visual { position: relative; height: 420px; display: flex; align-items: center; justify-content: center; }
+    .division-orbit {
+      position: relative; width: 340px; height: 340px;
+    }
+    .orbit-center {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+      width: 96px; height: 96px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--blue));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.72rem; font-weight: 800; letter-spacing: 0.04em;
+      color: #0e0e0e; text-align: center; line-height: 1.3;
+      box-shadow: 0 0 60px rgba(0,255,136,0.25), 0 0 120px rgba(0,136,255,0.15);
+      z-index: 2;
+    }
+    .orbit-ring {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      border-radius: 50%; border: 1px dashed rgba(255,255,255,0.08);
+      animation: spin 30s linear infinite;
+    }
+    .orbit-ring--1 { width: 200px; height: 200px; animation-duration: 20s; }
+    .orbit-ring--2 { width: 300px; height: 300px; animation-duration: 35s; animation-direction: reverse; }
+    @keyframes spin { from { transform: translate(-50%,-50%) rotate(0deg); } to { transform: translate(-50%,-50%) rotate(360deg); } }
+
+    .orbit-node {
+      position: absolute; top: 50%; left: 50%;
+      width: 62px; height: 62px; border-radius: 50%;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      font-size: 0.6rem; font-weight: 700; letter-spacing: 0.04em; text-align: center;
+      border: 1px solid; cursor: default; transition: transform 0.2s;
+      line-height: 1.2;
+    }
+    .orbit-node:hover { transform: translate(var(--ox),var(--oy)) scale(1.15) !important; }
+    .orbit-node span { font-size: 1.2rem; margin-bottom: 2px; display: block; }
+    .node--hedge { --color: #00ff88; background: rgba(0,255,136,0.1); border-color: rgba(0,255,136,0.35); color: var(--accent); }
+    .node--beta  { --color: #0088ff; background: rgba(0,136,255,0.1); border-color: rgba(0,136,255,0.35); color: var(--blue); }
+    .node--ib    { --color: #7c4dff; background: rgba(124,77,255,0.1); border-color: rgba(124,77,255,0.35); color: var(--purple); }
+    .node--acc   { --color: #ffb300; background: rgba(255,179,0,0.1); border-color: rgba(255,179,0,0.35); color: var(--amber); }
+    .node--vc    { --color: #ff4081; background: rgba(255,64,129,0.1); border-color: rgba(255,64,129,0.35); color: var(--pink); }
+
+    /* ── Section headers ── */
+    .section-eyebrow {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--text-3); margin-bottom: 14px;
+    }
+    .section-title {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 900; letter-spacing: -0.04em; line-height: 1.1;
+      margin-bottom: 16px;
+    }
+    .section-sub { font-size: 1.05rem; color: var(--text-2); max-width: 560px; line-height: 1.7; }
+
+    /* ── Stat strip ── */
+    .stat-strip {
+      background: var(--bg-3); border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border); padding: 40px 0;
+    }
+    .stat-strip__grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0;
+    }
+    .stat-item {
+      padding: 24px 32px; border-right: 1px solid var(--border);
+      text-align: center;
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-item__value {
+      font-size: 2.4rem; font-weight: 900; letter-spacing: -0.04em;
+      background: linear-gradient(135deg, var(--accent), var(--blue));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; display: block; margin-bottom: 4px;
+    }
+    .stat-item__label { font-size: 0.8rem; color: var(--text-3); font-weight: 500; }
+
+    /* ── Division cards grid ── */
+    .divisions-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px; margin-top: 56px;
+    }
+    .div-card {
+      background: var(--bg-3); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 32px;
+      position: relative; overflow: hidden; cursor: pointer;
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+      text-decoration: none; color: inherit; display: block;
+    }
+    .div-card::before {
+      content: ''; position: absolute; inset: 0;
+      background: var(--card-glow); opacity: 0;
+      transition: opacity 0.3s; border-radius: inherit;
+    }
+    .div-card:hover { transform: translateY(-6px); }
+    .div-card:hover::before { opacity: 1; }
+
+    .div-card--hedge { --card-accent: var(--accent); --card-glow: radial-gradient(ellipse at top left, rgba(0,255,136,0.06), transparent 60%); }
+    .div-card--hedge:hover { border-color: rgba(0,255,136,0.3); box-shadow: 0 20px 60px rgba(0,255,136,0.1); }
+    .div-card--beta  { --card-accent: var(--blue);   --card-glow: radial-gradient(ellipse at top left, rgba(0,136,255,0.06), transparent 60%); }
+    .div-card--beta:hover  { border-color: rgba(0,136,255,0.3); box-shadow: 0 20px 60px rgba(0,136,255,0.1); }
+    .div-card--ib    { --card-accent: var(--purple); --card-glow: radial-gradient(ellipse at top left, rgba(124,77,255,0.06), transparent 60%); }
+    .div-card--ib:hover    { border-color: rgba(124,77,255,0.3); box-shadow: 0 20px 60px rgba(124,77,255,0.1); }
+    .div-card--acc   { --card-accent: var(--amber);  --card-glow: radial-gradient(ellipse at top left, rgba(255,179,0,0.06), transparent 60%); }
+    .div-card--acc:hover   { border-color: rgba(255,179,0,0.3); box-shadow: 0 20px 60px rgba(255,179,0,0.1); }
+    .div-card--vc    { --card-accent: var(--pink);   --card-glow: radial-gradient(ellipse at top left, rgba(255,64,129,0.06), transparent 60%); }
+    .div-card--vc:hover    { border-color: rgba(255,64,129,0.3); box-shadow: 0 20px 60px rgba(255,64,129,0.1); }
+
+    .div-card__icon {
+      width: 52px; height: 52px; border-radius: 14px;
+      background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; margin-bottom: 20px;
+    }
+    .div-card__badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 3px 10px; border-radius: 999px;
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.07em;
+      text-transform: uppercase; color: var(--card-accent);
+      background: color-mix(in srgb, var(--card-accent) 10%, transparent);
+      border: 1px solid color-mix(in srgb, var(--card-accent) 25%, transparent);
+      margin-bottom: 12px;
+    }
+    .div-card__title {
+      font-size: 1.3rem; font-weight: 800; letter-spacing: -0.02em;
+      margin-bottom: 10px; color: var(--text);
+    }
+    .div-card__sub { font-size: 0.88rem; color: var(--text-2); line-height: 1.65; margin-bottom: 20px; }
+    .div-card__tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag {
+      font-size: 0.7rem; font-weight: 500; padding: 3px 9px; border-radius: 6px;
+      background: rgba(255,255,255,0.05); color: var(--text-3);
+      border: 1px solid rgba(255,255,255,0.07);
+    }
+    .div-card__arrow {
+      position: absolute; top: 28px; right: 28px;
+      color: var(--text-3); font-size: 1.1rem; transition: all 0.2s;
+    }
+    .div-card:hover .div-card__arrow { color: var(--card-accent); transform: translate(3px,-3px); }
+
+    /* ── Division deep-dive sections ── */
+    .division-section {
+      padding: 100px 0; border-top: 1px solid var(--border);
+      position: relative;
+    }
+    .division-section__inner {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: start;
+    }
+    @media (max-width: 900px) { .division-section__inner { grid-template-columns: 1fr; gap: 40px; } }
+
+    .division-section__badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 5px 14px; border-radius: 999px;
+      font-size: 0.74rem; font-weight: 700; letter-spacing: 0.07em;
+      text-transform: uppercase; margin-bottom: 20px; border: 1px solid;
+    }
+    .division-section__badge-icon { font-size: 0.9rem; }
+    .badge--hedge { color: var(--accent); background: rgba(0,255,136,0.08); border-color: rgba(0,255,136,0.2); }
+    .badge--beta  { color: var(--blue);   background: rgba(0,136,255,0.08); border-color: rgba(0,136,255,0.2); }
+    .badge--ib    { color: var(--purple); background: rgba(124,77,255,0.08); border-color: rgba(124,77,255,0.2); }
+    .badge--acc   { color: var(--amber);  background: rgba(255,179,0,0.08); border-color: rgba(255,179,0,0.2); }
+    .badge--vc    { color: var(--pink);   background: rgba(255,64,129,0.08); border-color: rgba(255,64,129,0.2); }
+
+    .division-section__title {
+      font-size: clamp(1.8rem,3.5vw,2.8rem); font-weight: 900;
+      letter-spacing: -0.04em; line-height: 1.1; margin-bottom: 16px;
+    }
+    .division-section__desc { font-size: 1rem; color: var(--text-2); line-height: 1.75; margin-bottom: 28px; }
+    .capability-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .capability-list li {
+      display: flex; align-items: flex-start; gap: 12px;
+      font-size: 0.9rem; color: var(--text-2);
+    }
+    .capability-list li::before {
+      content: ''; width: 6px; height: 6px; border-radius: 50%;
+      margin-top: 7px; flex-shrink: 0;
+    }
+    .cl--hedge li::before { background: var(--accent); }
+    .cl--beta  li::before { background: var(--blue); }
+    .cl--ib    li::before { background: var(--purple); }
+    .cl--acc   li::before { background: var(--amber); }
+    .cl--vc    li::before { background: var(--pink); }
+
+    .chart-card {
+      background: var(--bg-3); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 28px;
+    }
+    .chart-card__title {
+      font-size: 0.78rem; font-weight: 600; color: var(--text-3);
+      text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 6px;
+    }
+    .chart-card__subtitle { font-size: 0.75rem; color: var(--text-3); margin-bottom: 20px; }
+    .chart-wrap { height: 240px; position: relative; }
+
+    .metric-row { display: flex; gap: 12px; margin-top: 20px; flex-wrap: wrap; }
+    .metric-chip {
+      flex: 1; min-width: 100px; background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border); border-radius: 12px; padding: 14px;
+      text-align: center;
+    }
+    .metric-chip__value {
+      font-size: 1.3rem; font-weight: 800; letter-spacing: -0.03em;
+      display: block; margin-bottom: 4px;
+    }
+    .metric-chip__label { font-size: 0.7rem; color: var(--text-3); font-weight: 500; }
+
+    /* ── Synergy section ── */
+    .synergy-section { background: var(--bg-2); border-top: 1px solid var(--border); }
+    .synergy-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center;
+    }
+    @media (max-width: 900px) { .synergy-grid { grid-template-columns: 1fr; } }
+
+    .synergy-canvas-wrap {
+      background: var(--bg-3); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 32px; position: relative;
+    }
+    #synergy-canvas { width: 100%; height: 320px; }
+
+    .ai-layer-box {
+      background: linear-gradient(135deg,rgba(0,255,136,0.05),rgba(0,136,255,0.05));
+      border: 1px solid rgba(0,255,136,0.15); border-radius: var(--radius-lg);
+      padding: 28px; margin-top: 24px;
+    }
+    .ai-layer-box__title {
+      font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--accent); margin-bottom: 12px;
+    }
+    .ai-layer-box p { font-size: 0.9rem; color: var(--text-2); line-height: 1.7; }
+    .ai-feature-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+    .ai-feature-tag {
+      font-size: 0.72rem; font-weight: 600; padding: 4px 10px;
+      border-radius: 6px; background: rgba(0,255,136,0.07);
+      color: var(--accent); border: 1px solid rgba(0,255,136,0.15);
+    }
+
+    /* ── Pre-seed CTA ── */
+    .cta-section { padding: 100px 0; }
+    .cta-card {
+      background: linear-gradient(135deg,rgba(0,255,136,0.06),rgba(0,136,255,0.06));
+      border: 1px solid rgba(0,255,136,0.15);
+      border-radius: 28px; padding: 64px; text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .cta-card::before {
+      content: ''; position: absolute; top: -120px; left: 50%; transform: translateX(-50%);
+      width: 400px; height: 400px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,255,136,0.08), transparent 70%);
+      pointer-events: none;
+    }
+    .cta-card__eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 16px; border-radius: 999px;
+      background: rgba(255,179,0,0.1); border: 1px solid rgba(255,179,0,0.25);
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.07em;
+      text-transform: uppercase; color: var(--amber); margin-bottom: 28px;
+    }
+    .cta-card__title {
+      font-size: clamp(2rem,4vw,3.2rem); font-weight: 900;
+      letter-spacing: -0.04em; margin-bottom: 16px;
+    }
+    .cta-card__sub { font-size: 1.05rem; color: var(--text-2); max-width: 520px; margin: 0 auto 36px; line-height: 1.7; }
+    .cta-card__equity {
+      display: inline-flex; align-items: center; gap: 24px;
+      flex-wrap: wrap; justify-content: center;
+      background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+      border-radius: var(--radius-md); padding: 20px 36px; margin-bottom: 36px;
+    }
+    .equity-item { text-align: center; }
+    .equity-item__value { font-size: 1.8rem; font-weight: 900; letter-spacing: -0.04em; }
+    .equity-item__value--green { color: var(--accent); }
+    .equity-item__value--blue  { color: var(--blue); }
+    .equity-item__label { font-size: 0.72rem; color: var(--text-3); font-weight: 500; margin-top: 2px; }
+    .equity-divider { width: 1px; height: 44px; background: var(--border); }
+    .cta-card__actions { display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap; }
+
+    /* ── Footer ── */
+    .site-footer {
+      background: var(--bg-3); border-top: 1px solid var(--border);
+      padding: 48px 0 32px;
+    }
+    .footer-inner {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: 48px; flex-wrap: wrap; margin-bottom: 40px;
+    }
+    .footer-brand { font-size: 1.4rem; font-weight: 900; letter-spacing: -0.03em; }
+    .footer-brand span { color: var(--accent); }
+    .footer-brand-sub { font-size: 0.8rem; color: var(--text-3); margin-top: 6px; }
+    .footer-links { display: flex; gap: 32px; flex-wrap: wrap; }
+    .footer-links a {
+      font-size: 0.85rem; color: var(--text-2); text-decoration: none; transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--text); }
+    .footer-links a.active { color: var(--accent); }
+    .footer-bottom {
+      border-top: 1px solid var(--border); padding-top: 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px;
+    }
+    .footer-bottom p { font-size: 0.75rem; color: var(--text-3); }
+
+    /* ── Legal strip ── */
+    .legal-strip {
+      background: rgba(255,255,255,0.02); border-top: 1px solid var(--border);
+      padding: 14px var(--gutter);
+      display: flex; flex-wrap: wrap; align-items: center;
+      justify-content: space-between; gap: 12px;
+    }
+    .legal-strip p { font-size: 0.73rem; color: rgba(255,255,255,0.3); max-width: 680px; line-height: 1.6; }
+    .legal-strip a { color: rgba(0,255,136,0.7); text-decoration: none; font-weight: 600; }
+    .legal-strip a:hover { color: var(--accent); }
+
+    /* ── Reveal animation ── */
+    [data-reveal] { opacity: 0; transform: translateY(32px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    [data-reveal].is-visible { opacity: 1; transform: none; }
+    [data-reveal-delay="1"] { transition-delay: 0.1s; }
+    [data-reveal-delay="2"] { transition-delay: 0.2s; }
+    [data-reveal-delay="3"] { transition-delay: 0.3s; }
+    [data-reveal-delay="4"] { transition-delay: 0.4s; }
+
+    @media (max-width: 640px) {
+      .stat-strip__grid { grid-template-columns: repeat(2,1fr); }
+      .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
+      .divisions-grid { grid-template-columns: 1fr; }
+      .cta-card { padding: 40px 24px; }
+      .cta-card__equity { padding: 16px 20px; }
+      .equity-divider { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Pre-seed bar -->
+<div class="hf-preseed-bar" style="background:linear-gradient(90deg,rgba(255,179,0,0.08),rgba(255,82,82,0.06));border-bottom:1px solid rgba(255,179,0,0.15);padding:10px 0;font-family:-apple-system,BlinkMacSystemFont,'Inter',sans-serif;">
+  <div style="max-width:1280px;margin:0 auto;padding:0 clamp(1rem,5vw,4rem);display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;text-align:center;">
+    <span style="width:7px;height:7px;border-radius:50%;background:#ffb300;box-shadow:0 0 8px rgba(255,179,0,0.5);display:inline-block;flex-shrink:0;"></span>
+    <span style="font-size:0.78rem;color:rgba(255,255,255,0.6);">hydra fund is in <strong style="color:rgba(255,179,0,0.9);">pre-seed stage</strong> — not yet incorporated or regulated. Currently seeking $500K USD for 15% equity.</span>
+    <a href="legal.html" style="font-size:0.76rem;font-weight:600;color:rgba(255,179,0,0.8);text-decoration:none;border:1px solid rgba(255,179,0,0.2);padding:3px 10px;border-radius:999px;transition:all 0.2s;" onmouseover="this.style.background='rgba(255,179,0,0.08)'" onmouseout="this.style.background='transparent'">Learn more</a>
+  </div>
+</div>
+
+<!-- Nav -->
+<nav class="site-nav">
+  <div class="site-nav__inner">
+    <a class="brand" href="index.html">hydra <span>fund</span></a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="service.html">Services</a>
+      <a href="divisions.html" class="is-active" aria-current="page">Divisions</a>
+      <a href="about.html">About</a>
+      <a href="performance.html">Performance</a>
+      <a href="invest.html" class="nav-invest">Invest</a>
+      <a href="legal.html">Legal</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+  <!-- ── Hero ── -->
+  <section class="hero" style="margin-top:64px;">
+    <canvas id="hero-canvas"></canvas>
+    <div class="container" style="width:100%;">
+      <div class="hero__inner">
+        <div class="hero__copy">
+          <div class="hero__eyebrow">
+            <span class="hero__eyebrow-dot"></span>
+            Five Capital Engines
+          </div>
+          <h1 class="hero__title">
+            Five Engines.<br/>
+            <span class="grad">One AI Brain.</span>
+          </h1>
+          <p class="hero__sub">
+            hydra fund is a fully AI-native collectivised capital platform — operating a hedge fund, beta fund, investment bank, startup accelerator, and VC fund under a single unified intelligence layer.
+          </p>
+          <div class="hero__pills">
+            <span class="hero__pill pill--hedge"><span class="hero__pill-dot"></span>Hedge Fund</span>
+            <span class="hero__pill pill--beta"><span class="hero__pill-dot"></span>Beta Fund</span>
+            <span class="hero__pill pill--ib"><span class="hero__pill-dot"></span>Investment Bank</span>
+            <span class="hero__pill pill--acc"><span class="hero__pill-dot"></span>Accelerator</span>
+            <span class="hero__pill pill--vc"><span class="hero__pill-dot"></span>VC Fund</span>
+          </div>
+          <div class="hero__cta">
+            <a href="invest.html" class="btn btn--primary">Join Pre-Seed Round →</a>
+            <a href="#divisions" class="btn btn--ghost">Explore Divisions</a>
+          </div>
+        </div>
+        <div class="hero__visual">
+          <div class="division-orbit">
+            <div class="orbit-ring orbit-ring--1"></div>
+            <div class="orbit-ring orbit-ring--2"></div>
+            <div class="orbit-center">AI<br/>BRAIN</div>
+            <!-- nodes positioned via JS -->
+            <div class="orbit-node node--hedge" id="n-hedge" style="transform:translate(-170px,-1px);--ox:-170px;--oy:-1px;"><span>📈</span>Hedge<br/>Fund</div>
+            <div class="orbit-node node--beta" id="n-beta" style="transform:translate(-53px,-162px);--ox:-53px;--oy:-162px;"><span>📊</span>Beta<br/>Fund</div>
+            <div class="orbit-node node--ib" id="n-ib" style="transform:translate(108px,-100px);--ox:108px;--oy:-100px;"><span>🏦</span>Inv.<br/>Bank</div>
+            <div class="orbit-node node--acc" id="n-acc" style="transform:translate(108px,98px);--ox:108px;--oy:98px;"><span>🚀</span>Accel.</div>
+            <div class="orbit-node node--vc" id="n-vc" style="transform:translate(-53px,160px);--ox:-53px;--oy:160px;"><span>💼</span>VC<br/>Fund</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Stat strip ── -->
+  <div class="stat-strip">
+    <div class="container">
+      <div class="stat-strip__grid">
+        <div class="stat-item" data-reveal>
+          <span class="stat-item__value mono" data-counter="5">5</span>
+          <div class="stat-item__label">Capital Divisions</div>
+        </div>
+        <div class="stat-item" data-reveal data-reveal-delay="1">
+          <span class="stat-item__value mono" data-counter="100">100%</span>
+          <div class="stat-item__label">AI-Native Operations</div>
+        </div>
+        <div class="stat-item" data-reveal data-reveal-delay="2">
+          <span class="stat-item__value mono">$500K</span>
+          <div class="stat-item__label">Pre-Seed Target (15% Equity)</div>
+        </div>
+        <div class="stat-item" data-reveal data-reveal-delay="3">
+          <span class="stat-item__value mono">$500M+</span>
+          <div class="stat-item__label">AUM Target (Post-Launch)</div>
+        </div>
+        <div class="stat-item" data-reveal data-reveal-delay="4">
+          <span class="stat-item__value mono">1</span>
+          <div class="stat-item__label">Unified AI Decision Layer</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Division Cards ── -->
+  <section id="divisions">
+    <div class="container">
+      <div data-reveal>
+        <div class="section-eyebrow">Capital Architecture</div>
+        <h2 class="section-title">The Five Divisions</h2>
+        <p class="section-sub">Each division operates as an autonomous capital engine, cross-connected by a shared AI intelligence layer that routes signals, capital, and opportunities across the platform.</p>
+      </div>
+      <div class="divisions-grid">
+
+        <a href="#hedge-fund" class="div-card div-card--hedge" data-reveal data-reveal-delay="1">
+          <div class="div-card__arrow">↗</div>
+          <div class="div-card__icon">📈</div>
+          <div class="div-card__badge">Division 01</div>
+          <div class="div-card__title">Hedge Fund</div>
+          <div class="div-card__sub">AI-driven market-neutral strategies targeting alpha generation across liquid public markets with systematic risk controls.</div>
+          <div class="div-card__tags">
+            <span class="tag">Statistical Arbitrage</span>
+            <span class="tag">Momentum</span>
+            <span class="tag">Mean Reversion</span>
+            <span class="tag">Options</span>
+          </div>
+        </a>
+
+        <a href="#beta-fund" class="div-card div-card--beta" data-reveal data-reveal-delay="2">
+          <div class="div-card__arrow">↗</div>
+          <div class="div-card__icon">📊</div>
+          <div class="div-card__badge">Division 02</div>
+          <div class="div-card__title">Beta Fund</div>
+          <div class="div-card__sub">Systematic AI-optimised market exposure — smart beta, factor tilts, and dynamic index replication at institutional scale.</div>
+          <div class="div-card__tags">
+            <span class="tag">Smart Beta</span>
+            <span class="tag">Factor Investing</span>
+            <span class="tag">Index Replication</span>
+            <span class="tag">Portfolio Optimisation</span>
+          </div>
+        </a>
+
+        <a href="#investment-bank" class="div-card div-card--ib" data-reveal data-reveal-delay="3">
+          <div class="div-card__arrow">↗</div>
+          <div class="div-card__icon">🏦</div>
+          <div class="div-card__badge">Division 03</div>
+          <div class="div-card__title">Investment Bank</div>
+          <div class="div-card__sub">AI-native M&A advisory, capital markets intelligence, and deal origination — compressing weeks of analysis into hours.</div>
+          <div class="div-card__tags">
+            <span class="tag">M&amp;A Advisory</span>
+            <span class="tag">Valuation AI</span>
+            <span class="tag">Due Diligence</span>
+            <span class="tag">Capital Raise</span>
+          </div>
+        </a>
+
+        <a href="#accelerator" class="div-card div-card--acc" data-reveal data-reveal-delay="1">
+          <div class="div-card__arrow">↗</div>
+          <div class="div-card__icon">🚀</div>
+          <div class="div-card__badge">Division 04</div>
+          <div class="div-card__title">Startup Accelerator</div>
+          <div class="div-card__sub">Intensive AI/fintech accelerator programs that take early-stage companies from concept to Series A-ready in 90 days.</div>
+          <div class="div-card__tags">
+            <span class="tag">AI/Fintech Focus</span>
+            <span class="tag">90-Day Programs</span>
+            <span class="tag">Capital + Mentorship</span>
+            <span class="tag">Network Access</span>
+          </div>
+        </a>
+
+        <a href="#vc-fund" class="div-card div-card--vc" data-reveal data-reveal-delay="2">
+          <div class="div-card__arrow">↗</div>
+          <div class="div-card__icon">💼</div>
+          <div class="div-card__badge">Division 05</div>
+          <div class="div-card__title">VC Fund</div>
+          <div class="div-card__sub">Venture capital for AI-first companies at Series A/B — sourced, underwritten, and portfolio-managed by autonomous AI systems.</div>
+          <div class="div-card__tags">
+            <span class="tag">Series A/B</span>
+            <span class="tag">AI-First</span>
+            <span class="tag">Deep Tech</span>
+            <span class="tag">Board Support</span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Hedge Fund Section ── -->
+  <section id="hedge-fund" class="division-section">
+    <div class="container">
+      <div class="division-section__inner">
+        <div data-reveal>
+          <div class="division-section__badge badge--hedge"><span class="division-section__badge-icon">📈</span> Division 01</div>
+          <h2 class="division-section__title">Hedge Fund</h2>
+          <p class="division-section__desc">
+            Our AI-native hedge fund operates market-neutral strategies across equities, derivatives, and commodities. Every signal is generated, validated, and executed by AI — eliminating human latency and cognitive bias from the alpha loop.
+          </p>
+          <ul class="capability-list cl--hedge">
+            <li><strong>Statistical Arbitrage</strong> — Cross-asset cointegration models identifying pricing inefficiencies at microsecond resolution</li>
+            <li><strong>Momentum + Reversal</strong> — Dual-regime trend-following with adaptive lookback windows tuned per asset class</li>
+            <li><strong>Options Volatility</strong> — AI-priced vol surface arbitrage capturing dispersion and skew opportunities</li>
+            <li><strong>Risk Engine</strong> — Real-time drawdown control, correlation monitoring, and automated position unwinding</li>
+            <li><strong>Market Microstructure</strong> — Order flow toxicity detection, VWAP/TWAP execution optimisation</li>
+          </ul>
+        </div>
+        <div data-reveal data-reveal-delay="2">
+          <div class="chart-card">
+            <div class="chart-card__title">Projected Strategy Performance</div>
+            <div class="chart-card__subtitle">Illustrative modelled returns — not actual fund results</div>
+            <div class="chart-wrap"><canvas id="chart-hedge"></canvas></div>
+            <div class="metric-row">
+              <div class="metric-chip">
+                <span class="metric-chip__value" style="color:#00ff88;">2.1×</span>
+                <div class="metric-chip__label">Target Sharpe</div>
+              </div>
+              <div class="metric-chip">
+                <span class="metric-chip__value" style="color:#00ff88;">-8%</span>
+                <div class="metric-chip__label">Max Drawdown</div>
+              </div>
+              <div class="metric-chip">
+                <span class="metric-chip__value" style="color:#00ff88;">24%</span>
+                <div class="metric-chip__label">Target Annual Return</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Beta Fund Section ── -->
+  <section id="beta-fund" class="division-section">
+    <div class="container">
+      <div class="division-section__inner">
+        <div data-reveal data-reveal-delay="2" style="order:2;">
+          <div class="chart-card">
+            <div class="chart-card__title">Factor Allocation Model</div>
+            <div class="chart-card__subtitle">Illustrative smart-beta factor weights — not actual portfolio</div>
+            <div class="chart-wrap"><canvas id="chart-beta"></canvas></div>
+            <div class="metric-row">
+              <div class="metric-chip">
+                <span class="metric-chip__value" style="color:#0088ff;">0.92</span>
+                <div class="metric-chip__label">Target Beta Capture</div>
+              </div>
+              <div class="metric-chip">
+                <span class="metric-chip__value" style="color:#0088ff;">0.35%</span>
+                <div class="metric-chip__label">Tracking Error</div>
+              </div>
+              <div class="metric-chip">
+                <span class="metric-chip__value" style="color:#0088ff;">1.4%</span>
+                <div class="metric-chip__label">Alpha Tilt Target</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div data-reveal style="order:1;">
+          <div class="division-section__badge badge--beta"><span class="division-section__badge-icon">📊</span> Division 02</div>
+          <h2 class="division-section__title">Beta Fund</h2>
+          <p class="division-section__desc">
+            The Beta Fund delivers systematic, AI-optimised market exposure at scale. Rather than passive index replication, our AI continuously tilts factor weights based on regime detection, rebalancing in real-time to capture smart beta premium while minimising costs.
+          </p>
+          <ul class="capability-list cl--beta">
+            <li><strong>Smart Beta Engine</strong> — AI-driven factor rotation across value, momentum, quality, low-vol, and size premia</li>
+            <li><strong>Index Replication</strong> — Sub-basis-point tracking error through ML-optimised sampling and hedging</li>
+            <li><strong>Regime Detection</strong> — Macro regime classification informing dynamic factor tilts</li>
+            <li><strong>Cost Optimisation</strong> — Transaction cost models minimise slippage and rebalancing drag</li>
+            <li><strong>ESG Overlay</strong> — AI-screened sustainable factor tilts without sacrificing return profile</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Investment Bank Section ── -->
+  <section id="investment-bank" class="division-section">
+    <div class="container">
+      <div class="division-section__inner">
+        <div data-reveal>
+          <div class="division-section__badge badge--ib"><span class="division-section__badge-icon">🏦</span> Division 03</div>
+          <h2 class="division-section__title">Investment Bank</h2>
+          <p class="division-section__desc">
+            A fully AI-native investment bank that compresses the traditional deal lifecycle from months to days. Our systems autonomously source deals, build financial models, conduct due diligence, and generate term sheets — with human experts available for relationship closure.
+          </p>
+          <ul class="capability-list cl--ib">
+            <li><strong>M&A Advisory</strong> — AI target screening, synergy modelling, valuation, and integration playbooks</li>
+            <li><strong>Equity Capital Markets</strong> — IPO readiness assessment, bookrunner analytics, pricing AI</li>
+            <li><strong>Debt Capital Markets</strong> — Credit scoring, covenant structuring, and investor matching</li>
+            <li><strong>Due Diligence AI</strong> — Document ingestion, red-flag detection, and risk scoring at scale</li>
+            <li><strong>Deal Origination</strong> — Autonomous prospecting across public filings, news, and alternative data</li>
+          </ul>
+        </div>
+        <div data-reveal data-reveal-delay="2">
+          <div class="chart-card">
+            <div class="chart-card__title">Deal Pipeline Velocity</div>
+            <div class="chart-card__subtitle">AI vs. traditional IB timeline compression — illustrative</div>
+            <div class="chart-wrap"><canvas id="chart-ib"></canvas></div>
+            <div class="metric-row">
+              <div class="metric-chip">
+                <span class="metric-chip__value" style="color:#7c4dff;">90%</span>
+                <div class="metric-chip__label">Time Reduction</div>
+              </div>
+              <div class="metric-chip">
+                <span class="metric-chip__value" style="color:#7c4dff;">10×</span>
+                <div class="metric-chip__label">Deal Throughput</div>
+              </div>
+              <div class="metric-chip">
+                <span class="metric-chip__value" style="color:#7c4dff;">72h</span>
+                <div class="metric-chip__label">Model-to-Memo</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Accelerator Section ── -->
+  <section id="accelerator" class="division-section">
+    <div class="container">
+      <div class="division-section__inner">
+        <div data-reveal data-reveal-delay="2" style="order:2;">
+          <div class="chart-card">
+            <div class="chart-card__title">Accelerator Cohort Outcomes</div>
+            <div class="chart-card__subtitle">Illustrative cohort progression — targets, not guarantees</div>
+            <div class="chart-wrap"><canvas id="chart-acc"></canvas></div>
+            <div class="metric-row">
+              <div class="metric-chip">
+                <span class="metric-chip__value" style="color:#ffb300;">90</span>
+                <div class="metric-chip__label">Days per Cohort</div>
+              </div>
+              <div class="metric-chip">
+                <span class="metric-chip__value" style="color:#ffb300;">10–15</span>
+                <div class="metric-chip__label">Companies per Cohort</div>
+              </div>
+              <div class="metric-chip">
+                <span class="metric-chip__value" style="color:#ffb300;">$250K</span>
+                <div class="metric-chip__label">Entry Capital per Co.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div data-reveal style="order:1;">
+          <div class="division-section__badge badge--acc"><span class="division-section__badge-icon">🚀</span> Division 04</div>
+          <h2 class="division-section__title">Startup Accelerator</h2>
+          <p class="division-section__desc">
+            Our 90-day AI/fintech accelerator takes early-stage companies from idea to institutional-grade pitch. Portfolio companies get direct access to hydra fund's AI infrastructure, capital allocation network, and the expertise of each of our five divisions.
+          </p>
+          <ul class="capability-list cl--acc">
+            <li><strong>Cohort Selection</strong> — AI-scored application review with founder DNA mapping and market opportunity sizing</li>
+            <li><strong>AI Infrastructure</strong> — Portfolio companies access hydra fund's model stack and data pipelines</li>
+            <li><strong>Capital Formation</strong> — Direct seed check + warm intros to Series A investors in our network</li>
+            <li><strong>Go-to-Market</strong> — AI-generated distribution playbooks, pricing models, and growth analytics</li>
+            <li><strong>Cross-Division Exposure</strong> — IB advisory, hedge fund as a customer, VC pipeline priority</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── VC Fund Section ── -->
+  <section id="vc-fund" class="division-section">
+    <div class="container">
+      <div class="division-section__inner">
+        <div data-reveal>
+          <div class="division-section__badge badge--vc"><span class="division-section__badge-icon">💼</span> Division 05</div>
+          <h2 class="division-section__title">VC Fund</h2>
+          <p class="division-section__desc">
+            Our venture capital arm deploys into AI-first companies at Series A/B — sourced through proprietary signal networks, underwritten by quantitative models, and actively supported through board-level AI strategy advisory.
+          </p>
+          <ul class="capability-list cl--vc">
+            <li><strong>Deal Sourcing</strong> — Autonomous pipeline from accelerator graduates, patent filings, and alternative data signals</li>
+            <li><strong>AI Underwriting</strong> — Founder scoring, market TAM modelling, and unit economics stress testing</li>
+            <li><strong>Portfolio Management</strong> — Real-time KPI dashboards, alert systems, and follow-on capital recommendations</li>
+            <li><strong>Board Strategy</strong> — AI-generated strategic recommendations, competitive intelligence, and market maps</li>
+            <li><strong>Exit Optimisation</strong> — M&A target matching via Investment Bank division, IPO readiness scoring</li>
+          </ul>
+        </div>
+        <div data-reveal data-reveal-delay="2">
+          <div class="chart-card">
+            <div class="chart-card__title">Portfolio Composition Target</div>
+            <div class="chart-card__subtitle">Illustrative sector allocation — targets, not actual portfolio</div>
+            <div class="chart-wrap"><canvas id="chart-vc"></canvas></div>
+            <div class="metric-row">
+              <div class="metric-chip">
+                <span class="metric-chip__value" style="color:#ff4081;">5–7×</span>
+                <div class="metric-chip__label">Target MOIC</div>
+              </div>
+              <div class="metric-chip">
+                <span class="metric-chip__value" style="color:#ff4081;">Ser. A/B</span>
+                <div class="metric-chip__label">Entry Stage</div>
+              </div>
+              <div class="metric-chip">
+                <span class="metric-chip__value" style="color:#ff4081;">AI-1st</span>
+                <div class="metric-chip__label">Mandate</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Synergy / AI Brain ── -->
+  <section class="synergy-section">
+    <div class="container">
+      <div class="synergy-grid">
+        <div data-reveal>
+          <div class="section-eyebrow">The Unified Layer</div>
+          <h2 class="section-title">One AI Brain<br/>Powering All Five</h2>
+          <p class="section-sub" style="margin-bottom:28px;">
+            Every division feeds data back into the central AI engine. A signal identified in the hedge fund becomes a deal thesis for the VC arm. A portfolio company's growth metrics inform the investment bank. The accelerator's deal flow seeds the beta fund's thematic tilts.
+          </p>
+          <div class="ai-layer-box">
+            <div class="ai-layer-box__title">AI Capabilities Across All Divisions</div>
+            <p>A shared model layer handles signal generation, pattern recognition, risk scoring, and decision orchestration — running 24/7 with no cognitive limits, no fatigue, and no bias.</p>
+            <div class="ai-feature-list">
+              <span class="ai-feature-tag">Reinforcement Learning</span>
+              <span class="ai-feature-tag">LLM Analysis</span>
+              <span class="ai-feature-tag">Time-Series Forecasting</span>
+              <span class="ai-feature-tag">Multi-Agent Orchestration</span>
+              <span class="ai-feature-tag">Real-Time Risk</span>
+              <span class="ai-feature-tag">Autonomous Execution</span>
+              <span class="ai-feature-tag">Alternative Data Ingestion</span>
+              <span class="ai-feature-tag">Cross-Division Routing</span>
+            </div>
+          </div>
+        </div>
+        <div data-reveal data-reveal-delay="2">
+          <div class="synergy-canvas-wrap">
+            <div class="chart-card__title" style="margin-bottom:4px;">Capital Flow &amp; Signal Routing</div>
+            <div class="chart-card__subtitle" style="margin-bottom:16px;">How the AI brain connects all five divisions</div>
+            <canvas id="synergy-canvas"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Pre-seed CTA ── -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-card" data-reveal>
+        <div class="cta-card__eyebrow">
+          <span style="width:6px;height:6px;border-radius:50%;background:var(--amber);box-shadow:0 0 8px rgba(255,179,0,0.5);"></span>
+          Pre-Seed Round Now Open
+        </div>
+        <h2 class="cta-card__title">Be a Foundational Backer<br/>of hydra fund.</h2>
+        <p class="cta-card__sub">We're raising $500K USD to fund legal incorporation, SEBI AIF registration, and the technology build-out that powers all five capital divisions. One investment, five compounding engines.</p>
+        <div class="cta-card__equity">
+          <div class="equity-item">
+            <div class="equity-item__value equity-item__value--green">$500K</div>
+            <div class="equity-item__label">Pre-Seed Target</div>
+          </div>
+          <div class="equity-divider"></div>
+          <div class="equity-item">
+            <div class="equity-item__value equity-item__value--blue">15%</div>
+            <div class="equity-item__label">Equity Offered</div>
+          </div>
+          <div class="equity-divider"></div>
+          <div class="equity-item">
+            <div class="equity-item__value" style="color:var(--purple);">5</div>
+            <div class="equity-item__label">Revenue Streams</div>
+          </div>
+          <div class="equity-divider"></div>
+          <div class="equity-item">
+            <div class="equity-item__value" style="color:var(--amber);">Pre-Inc.</div>
+            <div class="equity-item__label">Stage</div>
+          </div>
+        </div>
+        <div class="cta-card__actions">
+          <a href="invest.html" class="btn btn--primary">View Investment Details →</a>
+          <a href="mailto:advaith@hydracorp.dev" class="btn btn--ghost">Contact Advaith directly</a>
+        </div>
+        <p style="font-size:0.75rem;color:var(--text-3);margin-top:20px;">Not yet incorporated · No SEBI registration · Operations contingent on pre-seed · <a href="legal.html" style="color:rgba(255,255,255,0.4);">Full disclosures →</a></p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand">hydra <span>fund</span></div>
+        <div class="footer-brand-sub">AI-Native Capital Platform</div>
+      </div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="service.html">Services</a>
+        <a href="divisions.html" class="active">Divisions</a>
+        <a href="about.html">About</a>
+        <a href="performance.html">Performance</a>
+        <a href="invest.html">Invest</a>
+        <a href="legal.html">Legal</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 hydra fund. All rights reserved. Not yet incorporated.</p>
+      <p><a href="mailto:advaith@hydracorp.dev" style="color:var(--text-2);text-decoration:none;">advaith@hydracorp.dev</a></p>
+    </div>
+  </div>
+</footer>
+
+<div class="legal-strip">
+  <p><strong style="color:rgba(255,255,255,0.45);">Disclosure:</strong> hydra fund is not an incorporated entity and is not registered with SEBI or any regulatory authority. No securities are being offered on this website. All division descriptions, metrics, charts, and projections shown are illustrative only. Operations are contingent on securing pre-seed investment, completing legal incorporation, and obtaining applicable regulatory registrations.</p>
+  <a href="legal.html">View full legal disclosures →</a>
+</div>
+
+<script>
+// ── Particle canvas ──
+(function(){
+  const canvas = document.getElementById('hero-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, particles;
+  const N = 55;
+  const colors = ['#00ff88','#0088ff','#7c4dff','#ffb300','#ff4081'];
+
+  function resize(){
+    W = canvas.width = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+  }
+
+  function mkParticle(){
+    return {
+      x: Math.random()*W, y: Math.random()*H,
+      vx: (Math.random()-.5)*.4, vy: (Math.random()-.5)*.4,
+      r: 1 + Math.random()*2,
+      color: colors[Math.floor(Math.random()*colors.length)],
+      alpha: 0.2 + Math.random()*0.5
+    };
+  }
+
+  function init(){ particles = Array.from({length:N}, mkParticle); }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    particles.forEach((p,i)=>{
+      p.x += p.vx; p.y += p.vy;
+      if(p.x<0||p.x>W) p.vx*=-1;
+      if(p.y<0||p.y>H) p.vy*=-1;
+      ctx.save();
+      ctx.globalAlpha = p.alpha;
+      ctx.fillStyle = p.color;
+      ctx.shadowBlur = 8; ctx.shadowColor = p.color;
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill();
+      ctx.restore();
+      for(let j=i+1;j<particles.length;j++){
+        const q = particles[j];
+        const d = Math.hypot(p.x-q.x, p.y-q.y);
+        if(d<120){
+          ctx.save();
+          ctx.globalAlpha = (1-d/120)*0.12;
+          ctx.strokeStyle = p.color;
+          ctx.lineWidth = 0.6;
+          ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(q.x,q.y); ctx.stroke();
+          ctx.restore();
+        }
+      }
+    });
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', ()=>{ resize(); });
+  resize(); init(); draw();
+})();
+
+// ── Scroll reveal ──
+const revealEls = document.querySelectorAll('[data-reveal]');
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('is-visible'); io.unobserve(e.target); }});
+},{threshold:0.12});
+revealEls.forEach(el=>io.observe(el));
+
+// ── Chart.js global defaults ──
+Chart.defaults.color = 'rgba(255,255,255,0.45)';
+Chart.defaults.borderColor = 'rgba(255,255,255,0.06)';
+Chart.defaults.font.family = "'Inter', sans-serif";
+
+// ── Hedge Fund Chart: line (simulated equity curve) ──
+(function(){
+  const ctx = document.getElementById('chart-hedge').getContext('2d');
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const stratData = [100,103.2,107.8,105.1,110.4,115.9,113.2,119.8,124.3,122.1,129.7,135.4];
+  const benchData = [100,101.5,99.8,102.3,104.1,103.6,106.2,108.9,107.4,110.8,112.3,114.6];
+  new Chart(ctx,{type:'line',data:{
+    labels:months,
+    datasets:[
+      {label:'AI Strategy',data:stratData,borderColor:'#00ff88',backgroundColor:'rgba(0,255,136,0.08)',tension:0.45,borderWidth:2,pointRadius:0,fill:true},
+      {label:'Benchmark',data:benchData,borderColor:'rgba(255,255,255,0.2)',backgroundColor:'transparent',tension:0.45,borderWidth:1.5,pointRadius:0,borderDash:[4,4]}
+    ]
+  },options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'top',labels:{boxWidth:10,font:{size:11}}}},scales:{x:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{font:{size:10}}},y:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{font:{size:10},callback:v=>'$'+v}}}}});
+})();
+
+// ── Beta Fund Chart: bar (factor weights) ──
+(function(){
+  const ctx = document.getElementById('chart-beta').getContext('2d');
+  new Chart(ctx,{type:'bar',data:{
+    labels:['Value','Momentum','Quality','Low Vol','Size','Growth'],
+    datasets:[{
+      label:'Factor Weight %',
+      data:[22,28,18,15,10,7],
+      backgroundColor:['rgba(0,136,255,0.7)','rgba(0,136,255,0.6)','rgba(0,136,255,0.5)','rgba(0,136,255,0.45)','rgba(0,136,255,0.35)','rgba(0,136,255,0.25)'],
+      borderColor:'#0088ff',borderWidth:1,borderRadius:6
+    }]
+  },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{display:false},ticks:{font:{size:10}}},y:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{font:{size:10},callback:v=>v+'%'}}}}});
+})();
+
+// ── Investment Bank Chart: horizontal bar (time compression) ──
+(function(){
+  const ctx = document.getElementById('chart-ib').getContext('2d');
+  new Chart(ctx,{type:'bar',data:{
+    labels:['Deal Sourcing','Financial Modelling','Due Diligence','Valuation','Term Sheet','Memo Draft'],
+    datasets:[
+      {label:'Traditional (weeks)',data:[8,6,12,4,3,2],backgroundColor:'rgba(255,255,255,0.12)',borderRadius:4,borderSkipped:false},
+      {label:'hydra AI (hours)',data:[0.5,1,2,0.5,0.5,0.25],backgroundColor:'rgba(124,77,255,0.7)',borderRadius:4,borderSkipped:false}
+    ]
+  },options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{position:'top',labels:{boxWidth:10,font:{size:10}}}},scales:{x:{stacked:false,grid:{color:'rgba(255,255,255,0.04)'},ticks:{font:{size:10}}},y:{grid:{display:false},ticks:{font:{size:10}}}}}});
+})();
+
+// ── Accelerator Chart: stacked area (cohort progression) ──
+(function(){
+  const ctx = document.getElementById('chart-acc').getContext('2d');
+  new Chart(ctx,{type:'line',data:{
+    labels:['Day 0','Day 15','Day 30','Day 45','Day 60','Day 75','Day 90'],
+    datasets:[
+      {label:'Product Readiness',data:[10,25,42,58,72,85,95],borderColor:'#ffb300',backgroundColor:'rgba(255,179,0,0.06)',tension:0.5,borderWidth:2,pointRadius:0,fill:true},
+      {label:'Investor Readiness',data:[5,12,22,38,55,72,90],borderColor:'rgba(255,255,255,0.4)',backgroundColor:'transparent',tension:0.5,borderWidth:1.5,pointRadius:0,borderDash:[3,3]}
+    ]
+  },options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'top',labels:{boxWidth:10,font:{size:11}}}},scales:{x:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{font:{size:10}}},y:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{font:{size:10},callback:v=>v+'%'},max:100}}}});
+})();
+
+// ── VC Fund Chart: doughnut (sector allocation) ──
+(function(){
+  const ctx = document.getElementById('chart-vc').getContext('2d');
+  new Chart(ctx,{type:'doughnut',data:{
+    labels:['AI Infra','Fintech','Deep Tech','Dev Tools','Enterprise AI','Other'],
+    datasets:[{
+      data:[30,25,20,10,10,5],
+      backgroundColor:['rgba(255,64,129,0.8)','rgba(255,64,129,0.65)','rgba(255,64,129,0.5)','rgba(255,64,129,0.38)','rgba(255,64,129,0.28)','rgba(255,64,129,0.18)'],
+      borderColor:'#0e0e0e',borderWidth:2,hoverOffset:8
+    }]
+  },options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{legend:{position:'right',labels:{boxWidth:10,font:{size:10},padding:12}}}}});
+})();
+
+// ── Synergy canvas (animated node graph) ──
+(function(){
+  const canvas = document.getElementById('synergy-canvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = canvas.offsetWidth;
+  canvas.height = 320;
+  const W = canvas.width, H = canvas.height;
+
+  const nodes = [
+    {label:'AI\nBRAIN',x:W/2,y:H/2,r:34,color:'#00ff88',glow:true},
+    {label:'Hedge\nFund',x:W*0.15,y:H*0.22,r:22,color:'#00ff88',glow:false},
+    {label:'Beta\nFund',x:W*0.82,y:H*0.2,r:22,color:'#0088ff',glow:false},
+    {label:'Inv.\nBank',x:W*0.88,y:H*0.72,r:22,color:'#7c4dff',glow:false},
+    {label:'Accel.',x:W*0.18,y:H*0.76,r:22,color:'#ffb300',glow:false},
+    {label:'VC\nFund',x:W*0.5,y:H*0.08,r:22,color:'#ff4081',glow:false},
+  ];
+
+  let t = 0;
+  function drawSynergy(){
+    ctx.clearRect(0,0,W,H);
+    t += 0.012;
+
+    // Draw edges
+    for(let i=1;i<nodes.length;i++){
+      const n = nodes[i], center = nodes[0];
+      const pulse = (Math.sin(t*2 + i*1.2)+1)/2;
+      ctx.save();
+      ctx.globalAlpha = 0.15 + pulse*0.2;
+      ctx.strokeStyle = n.color;
+      ctx.lineWidth = 1.5;
+      ctx.setLineDash([4,6]);
+      ctx.lineDashOffset = -t*8;
+      ctx.beginPath();
+      ctx.moveTo(center.x, center.y);
+      ctx.lineTo(n.x, n.y);
+      ctx.stroke();
+      ctx.restore();
+
+      // Animated data packet
+      const progress = (Math.sin(t + i*0.8)+1)/2;
+      const px = center.x + (n.x-center.x)*progress;
+      const py = center.y + (n.y-center.y)*progress;
+      ctx.save();
+      ctx.globalAlpha = 0.9;
+      ctx.fillStyle = n.color;
+      ctx.shadowBlur = 10; ctx.shadowColor = n.color;
+      ctx.beginPath(); ctx.arc(px,py,3,0,Math.PI*2); ctx.fill();
+      ctx.restore();
+    }
+
+    // Draw nodes
+    nodes.forEach((n,i)=>{
+      ctx.save();
+      if(n.glow){ ctx.shadowBlur = 30; ctx.shadowColor = n.color; }
+      const pulse = n.glow ? 1 + Math.sin(t*2)*0.06 : 1;
+      ctx.fillStyle = `${n.color}22`;
+      ctx.strokeStyle = n.color;
+      ctx.lineWidth = n.glow ? 2 : 1.5;
+      ctx.globalAlpha = 0.9;
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.r*pulse, 0, Math.PI*2);
+      ctx.fill(); ctx.stroke();
+
+      // Label
+      ctx.globalAlpha = 1;
+      ctx.fillStyle = n.glow ? '#0e0e0e' : n.color;
+      ctx.font = `${n.glow?'700':'600'} ${n.glow?'9px':'8px'} Inter, sans-serif`;
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      const lines = n.label.split('\n');
+      const lh = n.glow ? 12 : 10;
+      lines.forEach((l,li)=>{ ctx.fillText(l, n.x, n.y - (lines.length-1)*lh/2 + li*lh); });
+      ctx.restore();
+    });
+
+    requestAnimationFrame(drawSynergy);
+  }
+  drawSynergy();
+})();
+</script>
+</body>
+</html>
