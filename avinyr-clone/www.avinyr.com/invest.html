@@ -908,7 +908,14 @@
     }
   </style>
 </head>
-<body>
+<body><div class="hf-preseed-bar" style="background:linear-gradient(90deg,rgba(255,179,0,0.08),rgba(255,82,82,0.06));border-bottom:1px solid rgba(255,179,0,0.15);padding:10px 0;font-family:-apple-system,BlinkMacSystemFont,'Inter',sans-serif;">
+  <div style="max-width:1240px;margin:0 auto;padding:0 clamp(1rem,5vw,4rem);display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;text-align:center;">
+    <span style="width:7px;height:7px;border-radius:50%;background:#ffb300;box-shadow:0 0 8px rgba(255,179,0,0.5);display:inline-block;flex-shrink:0;"></span>
+    <span style="font-size:0.78rem;color:rgba(255,255,255,0.6);">hydra fund is in <strong style="color:rgba(255,179,0,0.9);">pre-seed stage</strong> — not yet incorporated or regulated. Currently seeking pre-seed investment to build and launch.</span>
+    <a href="legal.html" style="font-size:0.76rem;font-weight:600;color:rgba(255,179,0,0.8);text-decoration:none;border:1px solid rgba(255,179,0,0.2);padding:3px 10px;border-radius:999px;" onmouseover="this.style.background='rgba(255,179,0,0.08)'" onmouseout="this.style.background='transparent'">Learn more</a>
+  </div>
+</div>
+
   <header class="site-nav">
     <div class="site-nav__inner">
       <a class="brand" href="index.html">hydra <span>fund</span></a>
@@ -919,6 +926,7 @@
         <a href="about.html">About</a>
         <a href="performance.html">Performance</a>
         <a class="is-active" href="invest.html" aria-current="page">Invest</a>
+        <a href="legal.html">Legal</a>
       </nav>
     </div>
   </header>
@@ -952,6 +960,16 @@
 
     <section>
       <div class="container">
+        <div style="padding:22px 26px;border-radius:18px;background:linear-gradient(135deg,rgba(255,82,82,0.07),rgba(255,179,0,0.05));border:1px solid rgba(255,82,82,0.22);margin-bottom:32px;" data-reveal>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+            <span style="font-size:1rem;">⚠</span>
+            <span style="font-size:0.74rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,82,82,0.85);">Pre-Incorporation Disclosure</span>
+          </div>
+          <p style="font-size:0.9rem;color:rgba(255,255,255,0.6);line-height:1.7;margin:0 0 8px;">
+            <strong style="color:rgba(255,255,255,0.82);">hydra fund is not yet incorporated and has no SEBI registration.</strong> The fund structures, investment tiers, and allocation frameworks described on this page represent the <em>intended architecture</em> of a fund that does not yet legally exist. No securities, fund units, or financial instruments are being offered or sold. hydra fund cannot accept capital until it is incorporated and holds the requisite SEBI Alternative Investment Fund registration.
+          </p>
+          <a href="legal.html" style="font-size:0.82rem;font-weight:600;color:rgba(255,82,82,0.8);text-decoration:none;">Read full legal disclosures →</a>
+        </div>
         <div class="section-head" data-reveal>
           <div>
             <div class="eyebrow">Fund Structure Overview</div>
@@ -1350,7 +1368,7 @@
                 <span>+</span>
               </button>
               <div class="faq-answer">
-                <div><p>Investor eligibility, offering structure, marketing, and reporting are governed through the applicable private fund, securities, KYC/AML, and jurisdiction-specific regulatory frameworks associated with each vehicle and investor domicile.</p></div>
+                <div><p><strong>Important transparency note:</strong> hydra fund is not yet incorporated and holds <strong>no current SEBI registration</strong> (AIF, PMS, or otherwise) and no RBI licence. It cannot legally accept investor capital today. The investment tiers, strategies, and structures described on this page are <em>intended future architecture</em>, planned for implementation after pre-seed funding enables incorporation and SEBI AIF registration. Once registered, the fund will operate under SEBI (Alternative Investment Funds) Regulations, 2012. <a href="legal.html" style="color:#00ff88;">Full disclosures →</a></p></div>
               </div>
             </div>
           </div>
@@ -1389,6 +1407,7 @@
           <a href="about.html">About</a>
           <a href="performance.html">Performance</a>
           <a href="invest.html">Invest</a>
+          <a href="legal.html">Legal</a>
         </div>
         <div class="footer-contact mono"><a href="mailto:advaith@hydracorp.dev">advaith@hydracorp.dev</a></div>
       </div>
@@ -1647,5 +1666,14 @@
       setTimeout(renderReturnsChart, 1200);
     }
   </script>
+
+<div class="hf-legal-strip" style="background:rgba(255,255,255,0.025);border-top:1px solid rgba(255,255,255,0.07);padding:16px 0;font-family:-apple-system,BlinkMacSystemFont,'Inter',sans-serif;">
+  <div style="max-width:1240px;margin:0 auto;padding:0 clamp(1rem,5vw,4rem);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;">
+    <p style="font-size:0.76rem;color:rgba(255,255,255,0.38);line-height:1.55;max-width:72ch;margin:0;">
+      <strong style="color:rgba(255,255,255,0.52);">Disclosure:</strong> hydra fund is <em>not</em> an incorporated entity and is <em>not</em> registered with SEBI or any regulatory authority. No securities are being offered. Investment tiers shown are forward-looking illustrations only. Operations are contingent on securing pre-seed investment.
+    </p>
+    <a href="legal.html" style="font-size:0.78rem;font-weight:600;color:rgba(0,255,136,0.75);text-decoration:none;white-space:nowrap;flex-shrink:0;" onmouseover="this.style.color='#00ff88'" onmouseout="this.style.color='rgba(0,255,136,0.75)'">View full legal disclosures →</a>
+  </div>
+</div>
 </body>
 </html>
