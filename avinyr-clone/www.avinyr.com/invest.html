@@ -152,11 +152,16 @@
       font-size: 0.95rem;
     }
 
-    .nav-links a:hover,
-    .nav-links a.is-active {
+    .nav-links a:hover {
       color: var(--text);
       background: rgba(255, 255, 255, 0.05);
       border-color: var(--border);
+    }
+
+    .nav-links a.is-active {
+      color: var(--accent);
+      background: rgba(0, 255, 136, 0.07);
+      border-color: rgba(0, 255, 136, 0.2);
     }
 
     main { padding-bottom: 28px; }
@@ -184,6 +189,17 @@
       border-radius: 50%;
       background: var(--accent);
       box-shadow: 0 0 18px rgba(0, 255, 136, 0.55);
+    }
+
+    .eyebrow--warning {
+      background: rgba(255, 179, 0, 0.06);
+      border-color: rgba(255, 179, 0, 0.2);
+      color: rgba(255, 179, 0, 0.85);
+    }
+
+    .eyebrow--warning::before {
+      background: #ffb300;
+      box-shadow: 0 0 14px rgba(255, 179, 0, 0.5);
     }
 
     h1, h2, h3, h4 { margin: 0; line-height: 1.03; }
@@ -1380,9 +1396,10 @@
       <div class="container">
         <div class="cta-card glass-card" data-reveal>
           <div>
-            <div class="eyebrow">Begin Your Allocation</div>
-            <h2>Ready to underwrite the next capital operating system?</h2><p style="color:#00ff88;font-size:0.95rem;margin-bottom:8px;font-weight:600;">We are currently raising a \$500K USD pre-seed round.</p>
-            <p>Connect with hydra fund to begin diligence, discuss fit, and structure your allocation pathway.</p>
+            <div class="eyebrow">Pre-Seed Round · $500K USD Target</div>
+            <h2>Ready to be a foundational backer of hydra fund?</h2>
+            <p style="color:rgba(0,255,136,0.9);font-size:0.92rem;margin-bottom:8px;font-weight:600;">We are raising a $500K USD pre-seed round to fund incorporation, SEBI AIF registration, and technology build-out.</p>
+            <p>Connect directly with Advaith — founder of hydra fund — to explore pre-seed participation. This is a ground-floor opportunity to back an AI-autonomous capital platform before it launches.</p>
           </div>
           <div class="cta-actions">
             <a class="button button--primary" href="mailto:advaith@hydracorp.dev">advaith@hydracorp.dev</a>
