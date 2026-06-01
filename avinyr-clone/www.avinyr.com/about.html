@@ -1768,4 +1768,24 @@ html.wf-design-mode .styleguide_guide_wrap {
     <a href="legal.html" style="font-size:0.78rem;font-weight:600;color:rgba(0,255,136,0.75);text-decoration:none;white-space:nowrap;flex-shrink:0;transition:color 0.2s;" onmouseover="this.style.color='#00ff88'" onmouseout="this.style.color='rgba(0,255,136,0.75)'">View full legal disclosures →</a>
   </div>
 </div>
+<style>
+.nav_button { transition: opacity 0.3s ease, transform 0.3s ease; }
+.nav_button.nav-button-hidden { opacity: 0; pointer-events: none; transform: translateY(-20px); }
+</style>
+<script>
+(function() {
+  var lastScroll = 0;
+  var navBtn = document.querySelector('.nav_button');
+  if (!navBtn) return;
+  window.addEventListener('scroll', function() {
+    var st = window.pageYOffset || document.documentElement.scrollTop;
+    if (st > 100 && st > lastScroll) {
+      navBtn.classList.add('nav-button-hidden');
+    } else {
+      navBtn.classList.remove('nav-button-hidden');
+    }
+    lastScroll = st <= 0 ? 0 : st;
+  }, { passive: true });
+})();
+</script>
 </body></html>
